@@ -2,8 +2,9 @@ package Reporting;
 
 
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,9 @@ public class ExtentTestManager {
         return extentTestMap.get((int) (long) (Thread.currentThread().getId()));
     }
     public static synchronized void endTest() {
-        extent.endTest(extentTestMap.get((int) (long) (Thread.currentThread().getId())));
+      // extent.endTest(extentTestMap.get((int) (long) (Thread.currentThread().getId())));
+
+
     }
     public static synchronized ExtentTest startTest(String testName) {
         return startTest(testName, "");
@@ -25,12 +28,12 @@ public class ExtentTestManager {
         return startTest(className,testName, "");
     }
     public static synchronized ExtentTest startTest(String testName, String desc) {
-        ExtentTest test = extent.startTest(testName, desc);
+        ExtentTest test = extent.createTest(testName, desc);
         extentTestMap.put((int) (long) (Thread.currentThread().getId()), test);
         return test;
     }
     public static synchronized ExtentTest startTest(String className,String testName, String desc) {
-        ExtentTest test = extentUpdate.startTest(testName, desc);
+        ExtentTest test = extentUpdate.createTest(testName, desc);
         extentTestMap.put((int) (long) (Thread.currentThread().getId()), test);
         return test;
     }
